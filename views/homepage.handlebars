@@ -8,11 +8,11 @@
 </head>
 <body>
     {{#each products as |product|}}
-   <h1> {{product.name}} </h1>
+   <a href="./{{product.id}}"><h1> {{product.product_name}}</h1></a>
     {{!-- {{product.link}} will go to product/productid then will look up specific product --}}
-    <p>{{product.image_url}}</p>
+    <img src="{{product.image_url}}"/>
     <p>{{product.price}} </p>
-    <p>{{product.rating}}</p>
+    {{!-- <p>{{product.rating}}</p> --}}
     <p>{{product.stock}}</p>
     {{/each}}
 </body>
