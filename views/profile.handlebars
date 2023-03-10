@@ -1,0 +1,20 @@
+<div>
+    <h2>Welcome {{user.name}}!</h2>
+    <br>
+    <h3>Wishlist</h3>
+    {{#each products as |product| }}
+    <div class="row mb-4 product">
+      <div class="col-md-5">
+        <h4>
+          <a href="/product/{{product.id}}">{{product.product_name}}</a>
+        </h4>
+        <img src="{{product.image_url}}" alt="{{project.description}}">
+      </div>
+      <div class="col-md-7">
+        <p>
+          {{project.description}}
+        </p>
+      </div>
+    </div>
+    {{/each}}
+</div>

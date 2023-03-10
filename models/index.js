@@ -35,4 +35,5 @@ module.exports = {
   Category,
   Tag,
   ProductTag,
+  User
 };
