@@ -1,6 +1,48 @@
+//front-end of application
+//will need to use res.render
 const router = require('express').Router();
-const { Product, User } = require('../models');
+const { Product, Category, Tag, ProductTag } = require('../models');
 const withAuth = require('../utils/auth');
+
+//import sequelize
+const sequelize = require('../config/connection');
+
+
+
+router.get('/', async (req, res) => {
+  //console.log("get route")
+    // find all categories
+    // be sure to include its associated Products
+    try {
+    const productData = await Product.findAll({
+      include: [Category, {model: Tag, through: ProductTag}], //will bring in all categories via index.js file 
+      //order: [['product_name', 'ASC']]
+    })
+    const products = productData.map((product) => product.get({plain: true}))
+    //console.log(products)
+    //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
+    res.status(200).render('homepage', {products})
+  } catch (err) { 
+    res.status(400).json(err)
+  }
+  });
+
+  router.get('/:productid', async (req, res) => {
+    // find all categories
+    // be sure to include its associated Products
+    try {
+    const productData = await Product.findByPk(req.params.productid, {
+      include: [Category, {model: Tag, through: ProductTag}], //will bring in all categories via index.js file 
+      //order: [['product_name', 'ASC']]
+    })
+    const product = productData.get({plain: true})
+    res.status(200).render('product', {product})
+  } catch (err) { 
+    res.status(400).json(err)
+  }
+  });
+
+
 
 router.get('/login', (req, res) => {
     // If the user is already logged in, redirect the request to another route

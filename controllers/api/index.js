@@ -1,12 +1,14 @@
-const router = require('express').Router();
-const userRoutes = require('./userRoutes');
-const productRoutes = require('./productRoutes');
-const categoryRoutes = require('./categoryRoutes');
-const tagRoutes = require('./tagRoutes');
+//for back-end purposes
 
-router.use('/users', userRoutes);
-// router.use('/products', productRoutes);
-// router.use('/categories', categoryRoutes);
-// router.use('/tags', tagRoutes);
+const router = require('express').Router();
+const categoryRoutes = require('./categoryRoutes');
+const productRoutes = require('./productRoutes');
+const tagRoutes = require('./tagRoutes');
+//import sequelize
+const sequelize = require('../../config/connection.js');
+
+router.use('/categories', categoryRoutes);
+router.use('/products', productRoutes);
+router.use('/tags', tagRoutes);
 
 module.exports = router;
