@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //front-end of application
 //will need to use res.render
 const router = require('express').Router();
@@ -37,3 +38,19 @@ router.get('/', async (req, res) => {
   });
 
   module.exports = router;
+=======
+const router = require('express').Router();
+const { Product, User } = require('../models');
+const withAuth = require('../utils/auth');
+
+router.get('/login', (req, res) => {
+    // If the user is already logged in, redirect the request to another route
+    if (req.session.logged_in) {
+      res.redirect('/profile');
+      return;
+    }
+    res.render('login');
+  });
+  
+  module.exports = router;
+>>>>>>> 714cebf9f8566265fc85ccc6d8f46cd9993c5ecb
