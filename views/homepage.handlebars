@@ -2,7 +2,7 @@
 <a href="./products/{{product.id}}"><h1> {{product.product_name}}</h1></a>
 {{!-- {{product.link}} will go to product/productid then will look up specific product --}}
 <img src="{{product.image_url}}"/>
-<p>{{product.price}} </p>
+<p>Price: ${{product.price}} </p>
 {{!-- <p>{{product.rating}}</p> --}}
-<p>{{product.stock}}</p>
+<p>{{product.stock}} in stock</p>
 {{/each}}

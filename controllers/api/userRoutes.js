@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const User = require('../../models/User');
+const { User, UserProduct, Product } = require('../../models');
 
 router.post('/', async (req, res) => {
   try {
@@ -12,6 +12,7 @@ router.post('/', async (req, res) => {
       res.status(200).json(userData);
     });
   } catch (err) {
+    console.log(err);
     res.status(400).json(err);
   }
 });
@@ -39,11 +40,12 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-      
+
       res.json({ user: userData, message: 'You are now logged in!' });
     });
 
   } catch (err) {
+    console.log(err);
     res.status(400).json(err);
   }
 });
@@ -60,17 +62,18 @@ router.post('/logout', (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-      // Find the logged in user based on the session ID
-      const userData = await User.findByPk(req.session.user_id, {
-          attributes: { exclude: ['password'] },
-          // include: [{ model: Product }],
-      });
+    // Find the logged in user based on the session ID
+    const userData = await User.findByPk(8, {
+      attributes: { exclude: ['password'] },
+      include: {model: Product, through: UserProduct},
+    });
+    
+    const user = userData.get({ plain: true });
 
-      const user = userData.get({ plain: true });
-
-      res.status(200).json(userData);
+    res.status(200).json(userData);
   } catch (err) {
-      res.status(500).json(err);
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 

@@ -2,17 +2,18 @@
     <h2>Welcome {{user.name}}!</h2>
     <br>
     <h3>Wishlist</h3>
-    {{#each products as |product| }}
+    {{#each user.products as |product| }}
     <div class="row mb-4 product">
       <div class="col-md-5">
         <h4>
-          <a href="/product/{{product.id}}">{{product.product_name}}</a>
+          <a href="/products/{{product.id}}">{{product.product_name}}</a>
         </h4>
-        <img src="{{product.image_url}}" alt="{{project.description}}">
+        <img src="{{product.image_url}}" alt="{{product.description}}">
       </div>
       <div class="col-md-7">
         <p>
-          {{project.description}}
+          {{product.description}}
+          Price: ${{product.price}}
         </p>
       </div>
     </div>
