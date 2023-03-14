@@ -1,7 +1,7 @@
 //front-end of application
 //will need to use res.render
 const router = require('express').Router();
-const { Product, Category, Tag, ProductTag } = require('../models');
+const { Product, Category, Tag, ProductTag, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 //import sequelize
@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
   }
   });
 
-  router.get('/:productid', async (req, res) => {
+  router.get('/products/:productid', async (req, res) => {
     // find all categories
     // be sure to include its associated Products
     try {
@@ -58,7 +58,7 @@ router.get('/profile', withAuth, async (req, res) => {
         // Find the logged in user based on the session ID
         const userData = await User.findByPk(req.session.user_id, {
             attributes: { exclude: ['password'] },
-            include: [{ model: Product }],
+            // include: [{ model: Product }],
         });
 
         const user = userData.get({ plain: true });
