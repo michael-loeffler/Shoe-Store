@@ -12,10 +12,16 @@ router.get('/', async (req, res) => {
   //console.log("get route")
     // find all categories
     // be sure to include its associated Products
+    // 
+
     try {
+    const sort = req.query.sortBy ?? 'stock'
+    const order = req.query.order ?? 'DESC'
+
     const productData = await Product.findAll({
       include: [Category, {model: Tag, through: ProductTag}], //will bring in all categories via index.js file 
-      //order: [['product_name', 'ASC']]
+      order: [[sort, order]]
+      
     })
     const products = productData.map((product) => product.get({plain: true}))
     //console.log(products)
@@ -33,6 +39,20 @@ router.get('/', async (req, res) => {
     const productData = await Product.findByPk(req.params.productid, {
       include: [Category, {model: Tag, through: ProductTag}], //will bring in all categories via index.js file 
       //order: [['product_name', 'ASC']]
+    })
+    const product = productData.get({plain: true})
+    res.status(200).render('product', {product})
+  } catch (err) { 
+    res.status(400).json(err)
+  }
+  });
+
+  router.get('/sortBy=price&order=asc', async (req, res) => {
+    // sort by price low to high
+    try {
+    const productData = await Product.findAll( {
+      include: [Category, {model: Tag, through: ProductTag}], //will bring in all categories via index.js file 
+      order: [['product_name', 'ASC']]
     })
     const product = productData.get({plain: true})
     res.status(200).render('product', {product})
