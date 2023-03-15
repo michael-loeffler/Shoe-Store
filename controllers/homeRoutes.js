@@ -47,20 +47,6 @@ router.get('/', async (req, res) => {
   }
   });
 
-  router.get('/sortBy=price&order=asc', async (req, res) => {
-    // sort by price low to high
-    try {
-    const productData = await Product.findAll( {
-      include: [Category, {model: Tag, through: ProductTag}], //will bring in all categories via index.js file 
-      order: [['product_name', 'ASC']]
-    })
-    const product = productData.get({plain: true})
-    res.status(200).render('product', {product})
-  } catch (err) { 
-    res.status(400).json(err)
-  }
-  });
-
 
 
 router.get('/login', (req, res) => {
@@ -72,3 +58,26 @@ router.get('/login', (req, res) => {
     res.render('login');
   });
   module.exports = router;
+
+  //cart
+
+  router.get('/cart', async (req, res) => {
+    //console.log("get route")
+      // find all categories
+      // be sure to include its associated Products
+      // 
+  
+      try {
+      console.log(req.session.user_id)
+      const cartData = await User.findByPk(req.session.user_id, {
+        include: [Product], //will bring in all categories via index.js file 
+        
+      })
+      const cart = cartData.map((cart) => cart.get({plain: true}))
+      //console.log(products)
+      //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
+      res.status(200).json(cart)
+    } catch (err) { 
+      res.status(400).json(err)
+    }
+    });
