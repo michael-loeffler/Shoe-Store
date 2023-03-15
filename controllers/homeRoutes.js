@@ -78,7 +78,7 @@ router.get('/profile', withAuth, async (req, res) => {
     }
 });
 
-module.exports = router;
+
 
   //cart
 
@@ -102,3 +102,5 @@ module.exports = router;
       res.status(400).json(err)
     }
     });
+
+    module.exports = router;
