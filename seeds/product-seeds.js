@@ -7,7 +7,7 @@ const productData = [
     price: 49.99,
     stock: 5,
     category_id: 1,
-    image_url: '../public/images/puma-womens-carina-sneaker.jpg',
+    image_url: '/images/puma-womens-carina-sneaker.jpg',
   },
  {
     product_name: 'Adidas Mens XPLR Running Shoe',
