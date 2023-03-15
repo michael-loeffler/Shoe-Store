@@ -1,0 +1,9 @@
+.clicked {
+    background-color: black;
+    color: rgb(252, 111, 95);
+}
+
+.unclicked {
+    background-color: aqua;
+    color: black;
+}

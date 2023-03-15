@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, UserProduct, Product } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 router.post('/', async (req, res) => {
   try {
@@ -65,9 +66,9 @@ router.get('/', async (req, res) => {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(8, {
       attributes: { exclude: ['password'] },
-      include: {model: Product, through: UserProduct},
+      include: { model: Product, through: UserProduct },
     });
-    
+
     const user = userData.get({ plain: true });
 
     res.status(200).json(userData);
@@ -76,5 +77,23 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.post('/wishlist', withAuth, async (req, res) => {
+  try {
+
+    const productId = req.body.product_id;
+    const userId = req.session.user_id
+
+    const userData = await UserProduct.create({
+      user_id: userId,
+      product_id: productId
+    });
+
+    res.status(200).json(userData);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+})
 
 module.exports = router;
