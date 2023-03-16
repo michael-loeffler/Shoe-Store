@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
   // 
 
   try {
-    const sort = req.query.sortBy ?? 'stock'
+    const sort = req.query.sort ?? 'stock'
     const order = req.query.order ?? 'DESC'
 
     const productData = await Product.findAll({
