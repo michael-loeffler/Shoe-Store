@@ -43,7 +43,12 @@ Product.init(
         model: 'category',
         key: 'id'
       }
-    }
+    },
+    image_url: {
+      type: DataTypes.TEXT('long'),
+      allowNull: false
+    },
+
 
   },
   {
