@@ -30,18 +30,20 @@ router.get('/', async (req, res) => {
       attributes: { exclude: ['password'] },
       include: { model: Product, through: UserProduct },
     });
-    const wishlist = wishlistData.map((wishlist) => wishlist.get({ plain: true }));
-    products = products.map((product)=> {
+    const wishlist = wishlistData.get({ plain: true });
+    const productsWithWishlist = products.map((product)=> {
       for (i = 0; i < wishlist.products.length; i++) {
         if (product.id === wishlist.products[i].id) {
           product.wishlist = true;
         }
       }
+      return product;
     })
     //console.log(products)
     //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
-    res.status(200).render('homepage', { products })
+    res.status(200).render('homepage', { productsWithWishlist })
   } catch (err) {
+    console.log(err);
     res.status(400).json(err)
   }
 });

@@ -1,4 +1,4 @@
-{{#each products as |product|}}
+{{#each productsWithWishlist as |product|}}
 <a href="./products/{{product.id}}"><h1> {{product.product_name}}</h1></a>
 {{!-- {{product.link}} will go to product/productid then will look up specific product --}}
 <img src="{{product.image_url}}"/>
@@ -9,6 +9,7 @@
 <button class="wishlist clicked" id="{{product.id}}">Remove from Wishlist</button>
 {{else}} 
 <button class="wishlist unclicked" id="{{product.id}}">Add to Wishlist</button>
+{{/if}}
 {{/each}}
 
 <script src="./js/home.js"></script>
