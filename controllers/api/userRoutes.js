@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, UserProduct, Product } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 router.post('/', async (req, res) => {
   try {
@@ -60,20 +61,61 @@ router.post('/logout', (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(8, {
-      attributes: { exclude: ['password'] },
-      include: {model: Product, through: UserProduct},
-    });
-    
-    const user = userData.get({ plain: true });
+// router.get('/', async (req, res) => {
+//   try {
+//     // Find the logged in user based on the session ID
+//     const userData = await User.findByPk(8, {
+//       attributes: { exclude: ['password'] },
+//       include: { model: Product, through: UserProduct },
+//     });
 
-    res.status(200).json(userData);
+//     const user = userData.get({ plain: true });
+
+//     res.status(200).json(userData);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
+
+router.post('/wishlist', withAuth, async (req, res) => {
+  try {
+
+    const userId = req.session.user_id
+    const productId = req.body.product_id;
+
+    const wishlistData = await UserProduct.create({
+      user_id: userId,
+      product_id: productId
+    });
+
+    res.status(200).json(wishlistData);
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    res.status(400).json(err);
+  }
+});
+
+router.delete('/wishlist/:id', withAuth, async (req, res) => {
+  try {
+
+    const userId = req.session.user_id
+    const wishlistData = await UserProduct.destroy({
+      where: {
+        user_id: userId,
+        product_id: req.params.id
+      }
+    });
+    
+    if (!wishlistData) {
+      res.status(404).json({ message: 'No wishlist item found with this id!' });
+      return;
+    }
+
+    res.status(200).json(wishlistData);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
   }
 });
 
