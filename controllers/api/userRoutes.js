@@ -61,22 +61,22 @@ router.post('/logout', (req, res) => {
   }
 });
 
-// router.get('/', async (req, res) => {
-//   try {
-//     // Find the logged in user based on the session ID
-//     const userData = await User.findByPk(8, {
-//       attributes: { exclude: ['password'] },
-//       include: { model: Product, through: UserProduct },
-//     });
+router.get('/', async (req, res) => {
+  try {
+    // Find the logged in user based on the session ID
+    const userData = await User.findAll( {
+      attributes: { exclude: ['password'] },
+      include: { model: Product, through: UserProduct },
+    });
 
-//     const user = userData.get({ plain: true });
+    const user = userData.map((user) => user.get({ plain: true }));
 
-//     res.status(200).json(userData);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json(err);
-//   }
-// });
+    res.status(200).json(userData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 router.post('/wishlist', withAuth, async (req, res) => {
   try {

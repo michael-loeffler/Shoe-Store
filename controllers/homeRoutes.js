@@ -24,11 +24,30 @@ router.get('/', async (req, res) => {
       order: [[sort, order]]
 
     })
-    const products = productData.map((product) => product.get({ plain: true }))
-    //console.log(products)
-    //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
-    res.status(200).render('homepage', { products })
+    const products = productData.map((product) => product.get({ plain: true }));
+    console.log(req.session.logged_in);
+    if (req.session.logged_in) {
+      const wishlistData = await User.findByPk(req.session.user_id, {
+        attributes: { exclude: ['password'] },
+        include: { model: Product, through: UserProduct },
+      });
+      const wishlist = wishlistData.get({ plain: true });
+      const productsWithWishlist = products.map((product) => {
+        for (i = 0; i < wishlist.products.length; i++) {
+          if (product.id === wishlist.products[i].id) {
+            product.wishlist = true;
+          }
+        }
+        return product;
+      })
+      //console.log(products)
+      //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
+      res.status(200).render('homepage', { productsWithWishlist, logged_in: true })
+    } else {
+      res.status(200).render('homepage', { products })
+    }
   } catch (err) {
+    console.log(err);
     res.status(400).json(err)
   }
 });
@@ -48,28 +67,28 @@ router.get('/products/:productid', async (req, res) => {
   }
 });
 
-  //cart
+//cart
 
-  router.get('/cart', async (req, res) => {
-    //console.log("get route")
-      // find all categories
-      // be sure to include its associated Products
-      // 
+router.get('/cart', async (req, res) => {
+  //console.log("get route")
+  // find all categories
+  // be sure to include its associated Products
+  // 
 
-      try {
-      console.log(req.session.user_id)
-      const cartData = await User.findByPk(req.session.user_id, {
-        include: [Product], //will bring in all categories via index.js file 
+  try {
+    console.log(req.session.user_id)
+    const cartData = await User.findByPk(req.session.user_id, {
+      include: [Product], //will bring in all categories via index.js file 
 
-      })
-      const cart = cartData.map((cart) => cart.get({plain: true}))
-      //console.log(products)
-      //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
-      res.status(200).json(cart)
-    } catch (err) { 
-      res.status(400).json(err)
-    }
-    });
+    })
+    const cart = cartData.map((cart) => cart.get({ plain: true }))
+    //console.log(products)
+    //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
+    res.status(200).json(cart)
+  } catch (err) {
+    res.status(400).json(err)
+  }
+});
 
 
 
