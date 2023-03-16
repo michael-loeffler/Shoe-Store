@@ -64,7 +64,7 @@ router.post('/logout', (req, res) => {
 router.get('/', async (req, res) => {
   try {
     // Find the logged in user based on the session ID
-    const userData = await User.findAll( {
+    const userData = await User.findAll({
       attributes: { exclude: ['password'] },
       include: { model: Product, through: UserProduct },
     });
@@ -106,7 +106,7 @@ router.delete('/wishlist/:id', withAuth, async (req, res) => {
         product_id: req.params.id
       }
     });
-    
+
     if (!wishlistData) {
       res.status(404).json({ message: 'No wishlist item found with this id!' });
       return;
@@ -118,5 +118,18 @@ router.delete('/wishlist/:id', withAuth, async (req, res) => {
     res.status(400).json(err);
   }
 });
+
+router.post('/cart', withAuth, async (req, res) => {
+  try {
+    req.session.save(() => {
+      req.session.cart.push(req.body);
+      res.status(200).json({ message: 'Added to cart!' });
+    });
+
+    } catch (err) {
+      console.log(err);
+      res.status(400).json(err);
+    }
+  });
 
 module.exports = router;
