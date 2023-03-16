@@ -35,16 +35,46 @@ const addToWishlist = async (e) => {
         button.classList.remove('unclicked')
         button.classList.add('clicked');
         button.textContent = "Remove from Wishlist";
+        button.removeEventListener('click', addToWishlist)
+        button.addEventListener('click', removeFromWishlist);
     } else {
-        alert(response.statusText);
+        alert('Item is already on wishlist');
     }
-
 };
+
+const removeFromWishlist = async (e) => {
+    const button = e.target;
+    const product_id = button.getAttribute('id');
+    console.log(product_id);
+    const response = await fetch(`/api/users/wishlist/${product_id}`, {
+        method: 'DELETE'
+    });
+
+    if (response.ok) {
+        button.classList.remove('clicked')
+        button.classList.add('unclicked');
+        button.textContent = "Add to Wishlist";
+        button.removeEventListener('click', removeFromWishlist)
+        button.addEventListener('click', addToWishlist);
+    } else {
+        alert('Failed to delete wishlist item');
+    }
+};
+
+
+
+
 
 
 for (var i = 0; i < unclicked.length; i++) {
     unclicked[i].addEventListener('click', addToWishlist);
 }
+
+for (var i = 0; i < clicked.length; i++) {
+    clicked[i].addEventListener('click', removeFromWishlist);
+}
+
+
 
 // unclicked.addEventListener('click', addToWishlist);
 // clicked.addEventListener('click', removeFromWishlist);
