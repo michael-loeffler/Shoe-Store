@@ -5,6 +5,9 @@
 <p>Price: ${{product.price}} </p>
 {{!-- <p>{{product.rating}}</p> --}}
 <p>{{product.stock}} in stock</p>
+{{#if product.wishlist}}
+<button class="wishlist clicked" id="{{product.id}}">Remove from Wishlist</button>
+{{else}} 
 <button class="wishlist unclicked" id="{{product.id}}">Add to Wishlist</button>
 {{/each}}
 

@@ -24,7 +24,20 @@ router.get('/', async (req, res) => {
       order: [[sort, order]]
 
     })
-    const products = productData.map((product) => product.get({ plain: true }))
+    const products = productData.map((product) => product.get({ plain: true }));
+
+    const wishlistData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: { model: Product, through: UserProduct },
+    });
+    const wishlist = wishlistData.map((wishlist) => wishlist.get({ plain: true }));
+    products = products.map((product)=> {
+      for (i = 0; i < wishlist.products.length; i++) {
+        if (product.id === wishlist.products[i].id) {
+          product.wishlist = true;
+        }
+      }
+    })
     //console.log(products)
     //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
     res.status(200).render('homepage', { products })
