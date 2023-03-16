@@ -35,7 +35,7 @@ const productData = [
     price: 59.99,
     stock: 5,
     category_id: 3,
-    image_url: '/images/Work-Boots-For-Men',
+    image_url: '/images/Work-Boots-For-Men.jpg',
   },
    {
     product_name: 'Lugz Womens Convoy Fur Fashion Boot',
@@ -70,7 +70,7 @@ const productData = [
     price: 199.99,
     stock: 5,
     category_id: 5,
-    image_url: '/images/Reebox-Womens-Legacy-Lifter-Cross-Trainer.jpg',
+    image_url: '/images/Reebok-Womens-Legacy-Lifter-Cross-Trainer.jpg',
   },
    {
     product_name: 'New Balance Mens 877 V1 Walking Shoe',
