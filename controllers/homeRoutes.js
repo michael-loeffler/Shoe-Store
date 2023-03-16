@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 
     })
     const products = productData.map((product) => product.get({ plain: true }));
-    console.log(req.session.logged_in);
+    
     if (req.session.logged_in) {
       const wishlistData = await User.findByPk(req.session.user_id, {
         attributes: { exclude: ['password'] },

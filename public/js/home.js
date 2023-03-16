@@ -2,6 +2,7 @@ const dropDown = document.getElementById('dropdown');
 const wishlist = document.getElementsByClassName('wishlist')
 const unclicked = document.getElementsByClassName('unclicked');
 const clicked = document.getElementsByClassName('clicked');
+const cartBtn = document.getElementsByClassName('cart');
 
 //sortby = [what's being sorted]
 //order = asc or desc
@@ -61,7 +62,26 @@ const removeFromWishlist = async (e) => {
     }
 };
 
+const addToCart = async (e) => {
+    const button = e.target;
+    const product_id = button.getAttribute('id');
 
+    const response = await fetch('/api/users/cart', {
+        method: 'POST',
+        body: JSON.stringify({ product_id }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+    console.log('posted!');
+    if (response.ok) {
+        // button.classList.remove('unclicked')
+        button.classList.add('clicked');
+        // button.textContent = "Remove from Wishlist";
+        // button.removeEventListener('click', addToWishlist)
+        // button.addEventListener('click', removeFromWishlist);
+    } else {
+        alert('Item is already in cart');
+    }
+};
 
 
 
@@ -69,7 +89,9 @@ const removeFromWishlist = async (e) => {
 for (var i = 0; i < unclicked.length; i++) {
     unclicked[i].addEventListener('click', addToWishlist);
 }
-
+for (var i = 0; i < cartBtn.length; i++) {
+    cartBtn[i].addEventListener('click', addToCart);
+}
 for (var i = 0; i < clicked.length; i++) {
     clicked[i].addEventListener('click', removeFromWishlist);
 }
