@@ -141,16 +141,15 @@ router.post('/cart', withAuth, async (req, res) => {
 router.get('/cart', withAuth, async (req, res) => {
   try {
     const cartData = req.session.cart;
-    console.log('this is cartData', cartData);
+    
     const productData = await Product.findAll({
       include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
     })
     const products = productData.map((product) => product.get({ plain: true }));
     const cart = products.filter((product) => {
-      console.log(product.id);
       return cartData.includes(product.id);
     })
-    console.log(cart);
+    
     res.render('cart', { cart })
   } catch (err) {
     console.log(err);
