@@ -25,14 +25,14 @@ router.get('/', async (req, res) => {
 
     })
     const products = productData.map((product) => product.get({ plain: true }));
-    
+
     if (req.session.logged_in) {
       const wishlistData = await User.findByPk(req.session.user_id, {
         attributes: { exclude: ['password'] },
         include: { model: Product, through: UserProduct },
       });
       const wishlist = wishlistData.get({ plain: true });
-      const productsWithWishlist = products.map((product) => {
+      let productsLoggedIn = products.map((product) => {
         for (i = 0; i < wishlist.products.length; i++) {
           if (product.id === wishlist.products[i].id) {
             product.wishlist = true;
@@ -40,12 +40,24 @@ router.get('/', async (req, res) => {
         }
         return product;
       })
-      //console.log(products)
-      //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
-      res.status(200).render('homepage', { productsWithWishlist, logged_in: true })
+      const cart = req.session.cart;
+      if (cart) {
+        productsLoggedIn = productsLoggedIn.map((product) => {
+          for (i = 0; i < cart.length; i++) {
+            if (product.id == cart[i]) {
+              product.cart = true;
+            }
+          }
+          return product;
+        })
+        //console.log(products)
+        //console.log(products[yourProductIndex].tags[tagIndex].tag_name)
+      }
+      res.status(200).render('homepage', { productsLoggedIn, logged_in: true })
     } else {
       res.status(200).render('homepage', { products })
     }
+
   } catch (err) {
     console.log(err);
     res.status(400).json(err)
@@ -110,11 +122,19 @@ router.get('/profile', withAuth, async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-
-    res.render('profile', {
-      user,
-      logged_in: true
-    });
+    
+    if (!user.products.length) {
+      res.render('profile', {
+        user,
+        logged_in: true,
+        empty: true
+      });
+    } else {
+      res.render('profile', {
+        user,
+        logged_in: true
+      });
+    }
   } catch (err) {
     res.status(500).json(err);
   }

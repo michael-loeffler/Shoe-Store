@@ -131,7 +131,6 @@ router.post('/cart', withAuth, async (req, res) => {
       }
       res.status(200).json({ message: 'Added to cart!' });
     });
-
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
@@ -140,20 +139,39 @@ router.post('/cart', withAuth, async (req, res) => {
 
 router.get('/cart', withAuth, async (req, res) => {
   try {
-    const cartData = req.session.cart;
-    
-    const productData = await Product.findAll({
-      include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
-    })
-    const products = productData.map((product) => product.get({ plain: true }));
-    const cart = products.filter((product) => {
-      return cartData.includes(product.id);
-    })
-    
-    res.render('cart', { cart })
+    if (req.session.cart) {
+      const cartData = req.session.cart;
+
+      const productData = await Product.findAll({
+        include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
+      })
+      const products = productData.map((product) => product.get({ plain: true }));
+      const cart = products.filter((product) => {
+        return cartData.includes(product.id);
+      })
+
+      res.render('cart', { cart })
+    } else {
+      res.render('cart', { empty: true })
+    }
   } catch (err) {
     console.log(err);
     res.status(400).json(err)
   }
 })
+
+router.delete('/cart/:id', withAuth, async (req, res) => {
+  try {
+
+    const cart = req.session.cart
+    const product_id = req.params.id;
+    const newCart = cart.filter((product) => product != product_id);
+    req.session.cart = newCart;
+
+    res.status(200).json(newCart);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
 module.exports = router;

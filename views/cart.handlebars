@@ -1,19 +1,23 @@
 <div>
     <h3>Cart</h3>
-    {{#each cart as |product| }}
-    <div class="row mb-4 product">
-      <div class="col-md-5">
-        <h4>
-          <a href="/products/{{product.id}}">{{product.product_name}}</a>
-        </h4>
-        <img src="{{product.image_url}}" alt="{{product.description}}">
+    {{#if empty}}
+    <p>Your cart is currently empty!</p>
+    {{else}}  
+      {{#each cart as |product| }}
+      <div class="row mb-4 product">
+        <div class="col-md-5">
+          <h4>
+            <a href="/products/{{product.id}}">{{product.product_name}}</a>
+          </h4>
+          <img src="{{product.image_url}}" alt="{{product.description}}">
+        </div>
+        <div class="col-md-7">
+          <p>
+            {{product.description}}
+            Price: ${{product.price}}
+          </p>
+        </div>
       </div>
-      <div class="col-md-7">
-        <p>
-          {{product.description}}
-          Price: ${{product.price}}
-        </p>
-      </div>
-    </div>
-    {{/each}}
+      {{/each}}
+      {{/if}}
 </div>

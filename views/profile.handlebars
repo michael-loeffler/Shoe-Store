@@ -2,20 +2,25 @@
     <h2>Welcome {{format_name user.name}}!</h2>
     <br>
     <h3>Wishlist</h3>
-    {{#each user.products as |product| }}
-    <div class="row mb-4 product">
-      <div class="col-md-5">
-        <h4>
-          <a href="/products/{{product.id}}">{{product.product_name}}</a>
-        </h4>
-        <img src="{{product.image_url}}" alt="{{product.description}}">
+    {{#if empty}}
+    <p>Your wishlist is currently empty!</p>
+    {{else}} 
+      {{#each user.products as |product| }}
+      <div class="row mb-4 product">
+        <div class="col-md-5">
+          <h4>
+            <a href="/products/{{product.id}}">{{product.product_name}}</a>
+          </h4>
+          <img src="{{product.image_url}}" alt="{{product.description}}">
+        </div>
+        <div class="col-md-7">
+          <p>
+            {{product.description}}
+            Price: ${{product.price}}
+          </p>
+        {{!-- <button class="wishlistRemove clicked" id="{{product.id}}">Remove from Wishlist</button> --}}
+        </div>
       </div>
-      <div class="col-md-7">
-        <p>
-          {{product.description}}
-          Price: ${{product.price}}
-        </p>
-      </div>
-    </div>
-    {{/each}}
+      {{/each}}
+    {{/if}}
 </div>
