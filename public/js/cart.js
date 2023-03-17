@@ -6,13 +6,16 @@ const securityToken = "d8b56d1a-7d63-406b-8600-6b6f6c43a724"
 purchase.addEventListener('click', (e)=> {
     //e.preventDefault()
     //i'm not sure if I want to prevent the default
-    fetch('/cart')
-    .then(function (response) {
-        console.log(response)
+    fetch('/api/users/purchase').then((response) => response.json())
+    .then((data) => {
+        console.log("DATA HERE: " + data)
+        //console.log(data.products[0].product_name)
+        //console.log(data.user.email)
+        //dynamically render body
         console.log("Purchased")
         // Email.send({
         //     SecureToken : securityToken,
-        //     To : cart.email,
+        //     To : data.user.email,
         //     From : "danielletorrise2023@u.northwestern.edu",
         //     Subject : "Your purchase from Shoe Store",
         //     Body : `Hello ${cart.name},
