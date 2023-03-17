@@ -1,8 +1,8 @@
 const dropDown = document.getElementById('dropdown');
-const wishlist = document.getElementsByClassName('wishlist')
-const unclicked = document.getElementsByClassName('unclicked');
-const clicked = document.getElementsByClassName('clicked');
-const cartBtn = document.getElementsByClassName('cart');
+const wishlistAdd = document.getElementsByClassName('wishlistAdd');
+const wishlistRemove = document.getElementsByClassName('wishlistRemove');
+const cartAdd = document.getElementsByClassName('cartAdd');
+const cartRemove = document.getElementsByClassName('cartRemove');
 
 //sortby = [what's being sorted]
 //order = asc or desc
@@ -46,7 +46,6 @@ const addToWishlist = async (e) => {
 const removeFromWishlist = async (e) => {
     const button = e.target;
     const product_id = button.getAttribute('id');
-    console.log(product_id);
     const response = await fetch(`/api/users/wishlist/${product_id}`, {
         method: 'DELETE'
     });
@@ -73,30 +72,45 @@ const addToCart = async (e) => {
     });
     console.log('posted!');
     if (response.ok) {
-        // button.classList.remove('unclicked')
+        button.classList.remove('unclicked')
         button.classList.add('clicked');
-        // button.textContent = "Remove from Wishlist";
-        // button.removeEventListener('click', addToWishlist)
-        // button.addEventListener('click', removeFromWishlist);
+        button.textContent = "Remove from Cart";
+        button.removeEventListener('click', addToCart)
+        button.addEventListener('click', removeFromCart);
     } else {
         alert('Item is already in cart');
     }
 };
 
+const removeFromCart = async (e) => {
+    const button = e.target;
+    const product_id = button.getAttribute('id');
+    const response = await fetch(`/api/users/cart/${product_id}`, {
+        method: 'DELETE'
+    });
+
+    if (response.ok) {
+        button.classList.remove('clicked')
+        button.classList.add('unclicked');
+        button.textContent = "Add to Cart";
+        button.removeEventListener('click', removeFromCart)
+        button.addEventListener('click', addToCart);
+    } else {
+        alert('Failed to delete cart item');
+    }
+};
 
 
-
-for (var i = 0; i < unclicked.length; i++) {
-    unclicked[i].addEventListener('click', addToWishlist);
+for (var i = 0; i < wishlistAdd.length; i++) {
+    wishlistAdd[i].addEventListener('click', addToWishlist);
 }
-for (var i = 0; i < cartBtn.length; i++) {
-    cartBtn[i].addEventListener('click', addToCart);
+for (var i = 0; i < cartAdd.length; i++) {
+    cartAdd[i].addEventListener('click', addToCart);
 }
-for (var i = 0; i < clicked.length; i++) {
-    clicked[i].addEventListener('click', removeFromWishlist);
+for (var i = 0; i < wishlistRemove.length; i++) {
+    wishlistRemove[i].addEventListener('click', removeFromWishlist);
+}
+for (var i = 0; i < cartRemove.length; i++) {
+    cartRemove[i].addEventListener('click', removeFromCart);
 }
 
-
-
-// unclicked.addEventListener('click', addToWishlist);
-// clicked.addEventListener('click', removeFromWishlist);

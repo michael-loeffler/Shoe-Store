@@ -18,7 +18,7 @@
 	<div class="container">
 	<div class="row">
 {{#if logged_in}}
-    {{#each productsWithWishlist as |product|}}
+    {{#each productsLoggedIn as |product|}}
     <div class="col-sm-4">
     <a href="./products/{{product.id}}"><h2> {{product.product_name}}</h2></a>
     {{!-- {{product.link}} will go to product/productid then will look up specific product --}}
@@ -26,12 +26,19 @@
     <p>Price: ${{product.price}} </p>
     {{!-- <p>{{product.rating}}</p> --}}
     <p>{{product.stock}} in stock</p>
-    <button class="cart" id="{{product.id}}">Add to Cart</button>
-    {{#if product.wishlist}}
-    <button class="wishlist clicked" id="{{product.id}}">Remove from Wishlist</button>
-    {{else}} 
-    <button class="wishlist unclicked" id="{{product.id}}">Add to Wishlist</button>
+
+    {{#if product.cart}}
+    <button class="cartRemove clicked" id="{{product.id}}">Remove from Cart</button>
+    {{else}}
+    <button class="cartAdd unclicked" id="{{product.id}}">Add to Cart</button>
     {{/if}}
+
+    {{#if product.wishlist}}
+    <button class="wishlistRemove clicked" id="{{product.id}}">Remove from Wishlist</button>
+    {{else}} 
+    <button class="wishlistAdd unclicked" id="{{product.id}}">Add to Wishlist</button>
+    {{/if}}
+
     </div>
     {{/each}}
 {{else}}

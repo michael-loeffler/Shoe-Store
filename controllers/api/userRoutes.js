@@ -131,7 +131,6 @@ router.post('/cart', withAuth, async (req, res) => {
       }
       res.status(200).json({ message: 'Added to cart!' });
     });
-
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
@@ -186,4 +185,19 @@ router.get('/purchase', withAuth, async (req, res) => {
     res.status(400).json(err)
   }
 })
+
+router.delete('/cart/:id', withAuth, async (req, res) => {
+  try {
+
+    const cart = req.session.cart
+    const product_id = req.params.id;
+    const newCart = cart.filter((product) => product != product_id);
+    req.session.cart = newCart;
+
+    res.status(200).json(newCart);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
 module.exports = router;
