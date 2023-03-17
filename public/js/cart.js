@@ -1,7 +1,6 @@
 const purchase = document.getElementById('purchase')
+const securityToken = process.ENV.securityToken
 
-//encrypted password token
-const securityToken = "d8b56d1a-7d63-406b-8600-6b6f6c43a724"
 
 purchase.addEventListener('click', (e)=> {
     //e.preventDefault()
