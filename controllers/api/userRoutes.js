@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, UserProduct, Product } = require('../../models');
+const { User, UserProduct, Product, Category, Tag, ProductTag } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.post('/', async (req, res) => {
@@ -64,7 +64,7 @@ router.post('/logout', (req, res) => {
 router.get('/', async (req, res) => {
   try {
     // Find the logged in user based on the session ID
-    const userData = await User.findAll( {
+    const userData = await User.findAll({
       attributes: { exclude: ['password'] },
       include: { model: Product, through: UserProduct },
     });
@@ -106,7 +106,7 @@ router.delete('/wishlist/:id', withAuth, async (req, res) => {
         product_id: req.params.id
       }
     });
-    
+
     if (!wishlistData) {
       res.status(404).json({ message: 'No wishlist item found with this id!' });
       return;
@@ -119,4 +119,41 @@ router.delete('/wishlist/:id', withAuth, async (req, res) => {
   }
 });
 
+router.post('/cart', withAuth, async (req, res) => {
+  try {
+    req.session.save(() => {
+      if (req.session.cart) {
+        req.session.cart.push(JSON.parse(req.body.product_id));
+      } else {
+        let emptyCart = [];
+        emptyCart.push(JSON.parse(req.body.product_id))
+        req.session.cart = emptyCart
+      }
+      res.status(200).json({ message: 'Added to cart!' });
+    });
+
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
+
+router.get('/cart', withAuth, async (req, res) => {
+  try {
+    const cartData = req.session.cart;
+    
+    const productData = await Product.findAll({
+      include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
+    })
+    const products = productData.map((product) => product.get({ plain: true }));
+    const cart = products.filter((product) => {
+      return cartData.includes(product.id);
+    })
+    
+    res.render('cart', { cart })
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err)
+  }
+})
 module.exports = router;

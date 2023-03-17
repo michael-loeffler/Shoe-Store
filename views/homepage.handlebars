@@ -26,6 +26,7 @@
     <p>Price: ${{product.price}} </p>
     {{!-- <p>{{product.rating}}</p> --}}
     <p>{{product.stock}} in stock</p>
+    <button class="cart" id="{{product.id}}">Add to Cart</button>
     {{#if product.wishlist}}
     <button class="wishlist clicked" id="{{product.id}}">Remove from Wishlist</button>
     {{else}} 
