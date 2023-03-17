@@ -143,14 +143,44 @@ router.get('/cart', withAuth, async (req, res) => {
     const cartData = req.session.cart;
     
     const productData = await Product.findAll({
+        where: {
+            id: cartData 
+        },
       include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
     })
     const products = productData.map((product) => product.get({ plain: true }));
-    const cart = products.filter((product) => {
-      return cartData.includes(product.id);
-    })
+
     
-    res.render('cart', { cart })
+    res.render('cart', { products })
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err)
+  }
+})
+
+router.get('/purchase', withAuth, async (req, res) => {
+  try {
+    console.log("LOOK HERE: " + req.session.cart)
+    if (req.session.cart) {
+      const cartData = req.session.cart;
+
+      const productData = await Product.findAll({
+        where: {
+          id: cartData 
+      },
+        include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
+      })
+      const products = productData.map((product) => product.get({ plain: true }));
+
+
+      const userData = await User.findByPk(req.session.user_id, {
+        attributes: { exclude: ['password'] }
+      }) 
+      const user = userData.get({ plain: true })
+      console.log("CART HERE: " + JSON.stringify(products))
+      const nestedObject = {products: products, user: user}
+      res.json(nestedObject); 
+    } 
   } catch (err) {
     console.log(err);
     res.status(400).json(err)

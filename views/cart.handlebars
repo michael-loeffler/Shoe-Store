@@ -1,6 +1,6 @@
 <div>
     <h3>Cart</h3>
-    {{#each cart as |product| }}
+    {{#each products as |product| }}
     <div class="row mb-4 product">
       <div class="col-md-5">
         <h4>
@@ -13,7 +13,13 @@
           {{product.description}}
           Price: ${{product.price}}
         </p>
+        <button id="purchase">Purchase</button>
       </div>
     </div>
     {{/each}}
 </div>
+<script src="/js/cart.js"></script>
+
+
+
+<script src="https://smtpjs.com/v3/smtp.js"></script>
