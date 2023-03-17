@@ -139,18 +139,21 @@ router.post('/cart', withAuth, async (req, res) => {
 
 router.get('/cart', withAuth, async (req, res) => {
   try {
-    const cartData = req.session.cart;
-    
-    const productData = await Product.findAll({
-        where: {
-            id: cartData 
-        },
-      include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
-    })
-    const products = productData.map((product) => product.get({ plain: true }));
+    if (req.session.cart) {
+      const cartData = req.session.cart;
 
-    
-    res.render('cart', { products })
+      const productData = await Product.findAll({
+        where: {
+          id: cartData
+        },
+        include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
+      })
+      const products = productData.map((product) => product.get({ plain: true }));
+
+      res.render('cart', { products })
+    } else {
+      res.render('cart', { empty: true })
+    }
   } catch (err) {
     console.log(err);
     res.status(400).json(err)
@@ -165,8 +168,8 @@ router.get('/purchase', withAuth, async (req, res) => {
 
       const productData = await Product.findAll({
         where: {
-          id: cartData 
-      },
+          id: cartData
+        },
         include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
       })
       const products = productData.map((product) => product.get({ plain: true }));
@@ -174,12 +177,12 @@ router.get('/purchase', withAuth, async (req, res) => {
 
       const userData = await User.findByPk(req.session.user_id, {
         attributes: { exclude: ['password'] }
-      }) 
+      })
       const user = userData.get({ plain: true })
       console.log("CART HERE: " + JSON.stringify(products))
-      const nestedObject = {products: products, user: user}
-      res.json(nestedObject); 
-    } 
+      const nestedObject = { products: products, user: user }
+      res.json(nestedObject);
+    }
   } catch (err) {
     console.log(err);
     res.status(400).json(err)
