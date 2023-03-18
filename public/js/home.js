@@ -95,6 +95,7 @@ const removeFromCart = async (e) => {
         button.textContent = "Add to Cart";
         button.removeEventListener('click', removeFromCart)
         button.addEventListener('click', addToCart);
+        location.reload();
     } else {
         alert('Failed to delete cart item');
     }
