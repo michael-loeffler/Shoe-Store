@@ -149,8 +149,7 @@ router.get('/cart', withAuth, async (req, res) => {
         include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
       })
       const products = productData.map((product) => product.get({ plain: true }));
-      console.log(products);
-      
+        
       const wishlistData = await User.findByPk(req.session.user_id, {
         attributes: { exclude: ['password'] },
         include: { model: Product, through: UserProduct },
@@ -163,7 +162,6 @@ router.get('/cart', withAuth, async (req, res) => {
           product.wishlist = true;
         }
       }) 
-      console.log(products)
       }
       res.render('cart', { products })
     } else {

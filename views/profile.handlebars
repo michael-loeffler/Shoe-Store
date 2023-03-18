@@ -18,9 +18,19 @@
             {{product.description}}
             Price: ${{product.price}}
           </p>
+          <button class="wishlistRemove clicked" id="{{product.id}}">Remove from Wishlist</button>
+          <br>
+          <br>
+          {{#if product.cart}}
+          <button class="cartRemove clicked" id="{{product.id}}">Remove from Cart</button>
+          {{else}} 
+          <button class="cartAdd unclicked" id="{{product.id}}">Add to Cart</button>
+          {{/if}}
         {{!-- <button class="wishlistRemove clicked" id="{{product.id}}">Remove from Wishlist</button> --}}
         </div>
       </div>
       {{/each}}
     {{/if}}
 </div>
+<script src="/js/home.js"></script>
+

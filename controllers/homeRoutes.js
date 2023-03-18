@@ -148,6 +148,7 @@ router.get('/profile', withAuth, async (req, res) => {
 
     const user = userData.get({ plain: true });
 
+
     if (!user.products.length) {
       res.render('profile', {
         user,
@@ -155,10 +156,20 @@ router.get('/profile', withAuth, async (req, res) => {
         empty: true
       });
     } else {
-      res.render('profile', {
-        user,
-        logged_in: true
-      });
+      const cartArray = req.session.cart;
+      if (cartArray) {
+        user.products.forEach((product) => {
+          for (i = 0; i < cartArray.length; i++) {
+            if (product.id == cartArray[i]) {
+              product.cart = true;
+            }
+          }
+        })
+        res.render('profile', {
+          user,
+          logged_in: true
+        });
+      }
     }
   } catch (err) {
     res.status(500).json(err);

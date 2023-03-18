@@ -56,6 +56,7 @@ const removeFromWishlist = async (e) => {
         button.textContent = "Add to Wishlist";
         button.removeEventListener('click', removeFromWishlist)
         button.addEventListener('click', addToWishlist);
+        location.reload();
     } else {
         alert('Failed to delete wishlist item');
     }
@@ -70,7 +71,6 @@ const addToCart = async (e) => {
         body: JSON.stringify({ product_id }),
         headers: { 'Content-Type': 'application/json' },
     });
-    console.log('posted!');
     if (response.ok) {
         button.classList.remove('unclicked')
         button.classList.add('clicked');
