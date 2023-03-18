@@ -73,7 +73,32 @@ router.get('/products/:productid', async (req, res) => {
       //order: [['product_name', 'ASC']]
     })
     const product = productData.get({ plain: true })
-    res.status(200).render('product', { product })
+    const product_id = product.id;
+
+    if (req.session.logged_in) {
+      const wishlistData = await User.findByPk(req.session.user_id, {
+        attributes: { exclude: ['password'] },
+        include: { model: Product, through: UserProduct },
+      });
+      const wishlistPlain = wishlistData.get({ plain: true });
+      const wishlistArray = wishlistPlain.products.map((product) => product.id);
+      if (wishlistArray.length) {
+        console.log(wishlistArray);
+        if (wishlistArray.includes(product_id)) {
+          product.wishlist = true;
+        }
+      }
+
+      const cartArray = req.session.cart;
+      if (cartArray) {
+        if (cartArray.includes(product_id)) {
+          product.cart = true;
+        }
+      }
+      res.status(200).render('product', { product, logged_in: true })
+    } else {
+      res.status(200).render('product', { product })
+    }
   } catch (err) {
     res.status(400).json(err)
   }
@@ -122,7 +147,7 @@ router.get('/profile', withAuth, async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-    
+
     if (!user.products.length) {
       res.render('profile', {
         user,

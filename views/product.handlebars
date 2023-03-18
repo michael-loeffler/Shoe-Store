@@ -12,5 +12,19 @@
     <p>Price ${{product.price}} </p>
     {{!-- <p>{{product.rating}}</p> --}}
     <p>{{product.stock}} in stock</p>
+    {{#if logged_in}}
+        {{#if product.cart}}
+        <button class="cartRemove clicked" id="{{product.id}}">Remove from Cart</button>
+        {{else}}
+        <button class="cartAdd unclicked" id="{{product.id}}">Add to Cart</button>
+        {{/if}}
+
+        {{#if product.wishlist}}
+        <button class="wishlistRemove clicked" id="{{product.id}}">Remove from Wishlist</button>
+        {{else}} 
+        <button class="wishlistAdd unclicked" id="{{product.id}}">Add to Wishlist</button>
+        {{/if}}
+    {{/if}}
 </body>
+<script src="/js/home.js"></script>
 </html>
