@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{product.name}}</title>
-</head>
-<body>
+
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
     <h1>{{product.product_name}}</h1>
-     <img src="{{product.image_url}}"/>
+     <img class="rounded float-start my-3" src="{{product.image_url}}"/>
     <p>Price ${{product.price}} </p>
     {{!-- <p>{{product.rating}}</p> --}}
     <p>{{product.stock}} in stock</p>
@@ -20,11 +13,12 @@
         {{/if}}
 
         {{#if product.wishlist}}
-        <button class="wishlistRemove clicked" id="{{product.id}}">Remove from Wishlist</button>
+        <button class="wishlistRemove cart mt-2 clicked" id="{{product.id}}">Remove from Wishlist</button>
         {{else}} 
-        <button class="wishlistAdd unclicked" id="{{product.id}}">Add to Wishlist</button>
+        <button class="wishlistAdd cart mt-2 unclicked" id="{{product.id}}">Add to Wishlist</button>
         {{/if}}
     {{/if}}
-</body>
+</div>
 <script src="/js/home.js"></script>
-</html>
+
+
