@@ -149,7 +149,20 @@ router.get('/cart', withAuth, async (req, res) => {
         include: [Category, { model: Tag, through: ProductTag }], //will bring in all categories via index.js file 
       })
       const products = productData.map((product) => product.get({ plain: true }));
-
+        
+      const wishlistData = await User.findByPk(req.session.user_id, {
+        attributes: { exclude: ['password'] },
+        include: { model: Product, through: UserProduct },
+      });
+      const wishlistPlain = wishlistData.get({ plain: true });
+      const wishlistArray = wishlistPlain.products.map((product) => product.id);
+      if (wishlistArray.length) {
+        products.forEach((product) => {
+        if (wishlistArray.includes(product.id)) {
+          product.wishlist = true;
+        }
+      }) 
+      }
       res.render('cart', { products })
     } else {
       res.render('cart', { empty: true })
