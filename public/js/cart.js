@@ -1,7 +1,7 @@
 
-
+// require('dotenv').config()
 const purchase = document.getElementById('purchase')
-
+// const securityToken = process.env.securityToken
 
 purchase.addEventListener('click', (e)=> {
     //e.preventDefault()
@@ -29,8 +29,24 @@ purchase.addEventListener('click', (e)=> {
         //   cartDiv.appendChild(imgTag)
         //   cartDiv.appendChild(document.createElement('br'))
         // }
-        window.alert("Congratulations " + data.user.name + ". Your purchase was successful")
-        location.reload()
+        const form = document.createElement('form')
+        const username = document.createElement('input')
+        username.setAttribute('type', 'text')
+        username.value = data.user.name
+        form.appendChild(username)
+        params = {
+            user: username.value
+        }
+
+        emailjs.sendForm('Gmail', 'demo_form', params)
+                    .then(function() {
+                        console.log('SUCCESS!');
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                    });
+
+        window.alert("Purchase successful!")
+        //location.reload()
     }
     )
 
