@@ -33,8 +33,8 @@ const addToWishlist = async (e) => {
     });
 
     if (response.ok) {
-        button.classList.remove('unclicked')
-        button.classList.add('clicked');
+        button.classList.remove('unclicked', 'btn-primary');
+        button.classList.add('clicked', 'btn-danger');
         button.textContent = "Remove from Wishlist";
         button.removeEventListener('click', addToWishlist)
         button.addEventListener('click', removeFromWishlist);
@@ -51,8 +51,8 @@ const removeFromWishlist = async (e) => {
     });
 
     if (response.ok) {
-        button.classList.remove('clicked')
-        button.classList.add('unclicked');
+        button.classList.remove('clicked', 'btn-danger');
+        button.classList.add('unclicked', 'btn-primary');
         button.textContent = "Add to Wishlist";
         button.removeEventListener('click', removeFromWishlist)
         button.addEventListener('click', addToWishlist);
@@ -72,8 +72,8 @@ const addToCart = async (e) => {
         headers: { 'Content-Type': 'application/json' },
     });
     if (response.ok) {
-        button.classList.remove('unclicked')
-        button.classList.add('clicked');
+        button.classList.remove('unclicked', 'btn-primary');
+        button.classList.add('clicked', 'btn-danger');
         button.textContent = "Remove from Cart";
         button.removeEventListener('click', addToCart)
         button.addEventListener('click', removeFromCart);
@@ -90,8 +90,8 @@ const removeFromCart = async (e) => {
     });
 
     if (response.ok) {
-        button.classList.remove('clicked')
-        button.classList.add('unclicked');
+        button.classList.remove('clicked', 'btn-danger');
+        button.classList.add('unclicked', 'btn-primary');
         button.textContent = "Add to Cart";
         button.removeEventListener('click', removeFromCart)
         button.addEventListener('click', addToCart);

@@ -37,12 +37,19 @@ router.post('/login', async (req, res) => {
         .json({ message: 'Incorrect email or password, please try again' });
       return;
     }
-
+    console.log(req.session.redirect_url);
+    const redirect_url = req.session.redirect_url;
+    console.log(42, redirect_url);
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-
-      res.json({ user: userData, message: 'You are now logged in!' });
+      console.log(46, redirect_url);
+      req.session.redirect_url = redirect_url;
+      console.log(48, req.session.redirect_url);
+      // if (typeof req.session.redirect_url == undefined ) {
+      //   req.session.redirect_url
+      // }
+      res.json({ user: userData, message: 'You are now logged in!', redirect_url: redirect_url });
     });
 
   } catch (err) {
@@ -142,7 +149,7 @@ router.get('/cart', withAuth, async (req, res) => {
     if (typeof req.session.cart !== 'undefined') {
       // the variable is defined) {
       if (req.session.cart.length == 0) {
-        res.render('cart', { empty: true })
+        res.render('cart', { empty: true, logged_in: true })
         return;
       }
       const cartData = req.session.cart;
@@ -168,9 +175,9 @@ router.get('/cart', withAuth, async (req, res) => {
         }
       }) 
       }
-      res.render('cart', { products })
+      res.render('cart', { products, logged_in: true  })
     } else {
-      res.render('cart', { empty: true })
+      res.render('cart', { empty: true, logged_in: true  })
     }
   } catch (err) {
     console.log(err);

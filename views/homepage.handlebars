@@ -28,15 +28,15 @@
     <p>{{product.stock}} in stock</p>
 
     {{#if product.cart}}
-    <button class="cartRemove clicked" id="{{product.id}}">Remove from Cart</button>
+    <button class="cartRemove clicked btn btn-danger" id="{{product.id}}">Remove from Cart</button>
     {{else}}
-    <button class="cartAdd unclicked" id="{{product.id}}">Add to Cart</button>
+    <button class="cartAdd unclicked btn btn-primary" id="{{product.id}}">Add to Cart</button>
     {{/if}}
 
     {{#if product.wishlist}}
-    <button class="wishlistRemove clicked" id="{{product.id}}">Remove from Wishlist</button>
+    <button class="wishlistRemove clicked btn btn-danger" id="{{product.id}}">Remove from Wishlist</button>
     {{else}} 
-    <button class="wishlistAdd unclicked" id="{{product.id}}">Add to Wishlist</button>
+    <button class="wishlistAdd unclicked btn btn-primary" id="{{product.id}}">Add to Wishlist</button>
     {{/if}}
 
     </div>
