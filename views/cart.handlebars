@@ -1,4 +1,4 @@
-<div>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
     <h3>Cart</h3>
     {{#if empty}}
     <p>Your cart is currently empty!</p>
@@ -17,19 +17,19 @@
             Price: ${{product.price}}
           </p>
 
-          <button class="cartRemove clicked" id="{{product.id}}">Remove from Cart</button>
+          <button class="cartRemove clicked btn btn-secondary"  id="{{product.id}}">Remove from Cart</button>
 
           {{#if product.wishlist}}
-          <button class="wishlistRemove clicked" id="{{product.id}}">Remove from Wishlist</button>
+          <button class="wishlistRemove clicked btn btn-secondary" id="{{product.id}}">Remove from Wishlist</button>
           {{else}} 
-          <button class="wishlistAdd unclicked" id="{{product.id}}">Add to Wishlist</button>
+          <button class="wishlistAdd unclicked btn btn-secondary" id="{{product.id}}">Add to Wishlist</button>
           {{/if}}
         </div>
       </div>
       {{/each}}
       {{/if}} 
       {{#unless empty}}
-        <button id="purchase">Purchase</button>
+        <button class="btn btn-primary" id="purchase">Purchase</button>
         <script src="/js/cart.js"></script>
       {{/unless}}
 
