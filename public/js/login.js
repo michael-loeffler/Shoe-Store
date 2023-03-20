@@ -12,10 +12,19 @@ const loginFormHandler = async (event) => {
         body: JSON.stringify({ email, password }),
         headers: { 'Content-Type': 'application/json' },
       });
-  
+      const responseJSON = await response.json();
+      const data = await responseJSON;
+      
+      console.log(data);
+      if (data.redirect_url === '/cart') {
+        data.redirect_url = '/api/users/cart'
+      } else if (!data.redirect_url) {
+        data.redirect_url ='/'
+      }
       if (response.ok) {
         // If successful, redirect the browser to the profile page
-        document.location.replace('/');
+        console.log(data.redirect_url);
+        document.location.replace(data.redirect_url);
       } else {
         alert(response.statusText);
       }

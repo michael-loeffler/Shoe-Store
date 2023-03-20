@@ -17,19 +17,19 @@
             Price: ${{product.price}}
           </p>
 
-          <button class="cartRemove clicked btn btn-secondary"  id="{{product.id}}">Remove from Cart</button>
+          <button class="cartRemove clicked btn btn-danger"  id="{{product.id}}">Remove from Cart</button>
 
           {{#if product.wishlist}}
-          <button class="wishlistRemove clicked btn btn-secondary" id="{{product.id}}">Remove from Wishlist</button>
+          <button class="wishlistRemove clicked btn btn-danger" id="{{product.id}}">Remove from Wishlist</button>
           {{else}} 
-          <button class="wishlistAdd unclicked btn btn-secondary" id="{{product.id}}">Add to Wishlist</button>
+          <button class="wishlistAdd unclicked btn btn-primary" id="{{product.id}}">Add to Wishlist</button>
           {{/if}}
         </div>
       </div>
       {{/each}}
       {{/if}} 
       {{#unless empty}}
-        <button class="btn btn-primary" id="purchase">Purchase</button>
+        <button class="btn btn-success" id="purchase">Purchase</button>
         <script src="/js/cart.js"></script>
       {{/unless}}
 
