@@ -1,7 +1,5 @@
 
-
 const purchase = document.getElementById('purchase')
-
 
 purchase.addEventListener('click', (e)=> {
     //e.preventDefault()
@@ -29,8 +27,25 @@ purchase.addEventListener('click', (e)=> {
         //   cartDiv.appendChild(imgTag)
         //   cartDiv.appendChild(document.createElement('br'))
         // }
+
+        const username = document.createElement('p')
+        username.innerHTML = data.user.name
+        params = {
+            user: data.user.name,
+            email: data.user.email,
+        }
+
+        emailjs.send('service_dztftnr', 'demo_form', params)
+                    .then(function() {
+                        console.log('SUCCESS!');
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                    });
+
+
         window.alert("Congratulations " + data.user.name + ". Your purchase was successful!")
         location.reload()
+
     }
     )
 
