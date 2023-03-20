@@ -29,16 +29,19 @@ purchase.addEventListener('click', (e)=> {
         //   cartDiv.appendChild(imgTag)
         //   cartDiv.appendChild(document.createElement('br'))
         // }
-        const form = document.createElement('form')
-        const username = document.createElement('input')
-        username.setAttribute('type', 'text')
-        username.value = data.user.name
-        form.appendChild(username)
+        // const form = document.createElement('form')
+        // const username = document.createElement('input')
+        // username.setAttribute('type', 'text')
+        // username.value = data.user.name
+        // form.appendChild(username)
+        const username = document.createElement('p')
+        username.innerHTML = data.user.name
         params = {
-            user: username.value
+            user: data.user.name,
+            email: data.user.email,
         }
 
-        emailjs.sendForm('Gmail', 'demo_form', params)
+        emailjs.send('service_dztftnr', 'demo_form', params)
                     .then(function() {
                         console.log('SUCCESS!');
                     }, function(error) {
