@@ -179,6 +179,8 @@ router.get('/purchase', withAuth, async (req, res) => {
     if (req.session.cart) {
       const cartData = req.session.cart;
 
+      req.session.cart.length = 0
+
       const productData = await Product.findAll({
         where: {
           id: cartData
