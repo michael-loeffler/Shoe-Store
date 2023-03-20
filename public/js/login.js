@@ -18,6 +18,8 @@ const loginFormHandler = async (event) => {
       console.log(data);
       if (data.redirect_url === '/cart') {
         data.redirect_url = '/api/users/cart'
+      } else if (!data.redirect_url) {
+        data.redirect_url ='/'
       }
       if (response.ok) {
         // If successful, redirect the browser to the profile page
