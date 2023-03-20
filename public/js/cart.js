@@ -49,7 +49,7 @@ purchase.addEventListener('click', (e)=> {
                     });
 
         window.alert("Purchase successful!")
-        //location.reload()
+        location.reload()
     }
     )
 
