@@ -28,10 +28,13 @@
       </div>
       {{/each}}
       {{/if}} 
-             <button id="purchase">Purchase</button>
+      {{#unless empty}}
+        <button id="purchase">Purchase</button>
+        <script src="/js/cart.js"></script>
+      {{/unless}}
 
 </div>
-<script src="/js/cart.js"></script>
+
 <script src="/js/home.js"></script>
 
 
