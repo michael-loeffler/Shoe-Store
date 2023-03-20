@@ -29,7 +29,7 @@ purchase.addEventListener('click', (e)=> {
         //   cartDiv.appendChild(imgTag)
         //   cartDiv.appendChild(document.createElement('br'))
         // }
-        window.alert("Congratulations " + data.user.name + ". Your purchase was successful")
+        window.alert("Congratulations " + data.user.name + ". Your purchase was successful!")
         location.reload()
     }
     )
