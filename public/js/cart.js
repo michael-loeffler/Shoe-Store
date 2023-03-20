@@ -43,6 +43,7 @@ purchase.addEventListener('click', (e)=> {
                     });
 
 
+
         window.alert("Congratulations " + data.user.name + ". Your purchase was successful!")
         location.reload()
 
