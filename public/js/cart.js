@@ -1,5 +1,6 @@
+
+
 const purchase = document.getElementById('purchase')
-const securityToken = process.ENV.securityToken
 
 
 purchase.addEventListener('click', (e)=> {
@@ -12,23 +13,26 @@ purchase.addEventListener('click', (e)=> {
         //console.log(data.user.email)
         //dynamically render body
         console.log("Purchased")
-        // Email.send({
-        //     SecureToken : securityToken,
-        //     To : data.user.email,
-        //     From : "danielletorrise2023@u.northwestern.edu",
-        //     Subject : "Your purchase from Shoe Store",
-        //     Body : `Hello ${cart.name},
-        //     Here is your ${cart.product_name} that you bought for ${product.price}
-        //     <img src="${cart.image_url}"`
-        // }).then(
-        //   message => alert("Purchase successful!")
-        // );
+        //for when I set up the smtpjs server
+        // const cartDiv = document.createElement('div')
+        // for (i = 0; i < data.products.length; i++) {
+        //   const pTagOne = document.createElement('p')
+        //   const pTagTwo = document.createElement('p')
+        //   const imgTag = document.createElement('img')
+          
+        //   pTagOne.innerHTML = data.products[i].product_name
+        //   pTagTwo.innerHTML = data.products[i].price
+        //   imgTag.src = data.products[i].img_url
+          
+        //   cartDiv.appendChild(pTagOne)
+        //   cartDiv.appendChild(pTagTwo)
+        //   cartDiv.appendChild(imgTag)
+        //   cartDiv.appendChild(document.createElement('br'))
+        // }
+        window.alert("Congratulations " + data.user.name + ". Your purchase was successful")
+        location.reload()
     }
     )
 
 })
 
-//will go in cart handlebars as script tag
-//https://smtpjs.com/v3/smtp.js
-
-//  https://mighty-brushlands-95444.herokuapp.com/

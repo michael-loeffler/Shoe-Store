@@ -16,12 +16,9 @@
             {{product.description}}
             Price: ${{product.price}}
           </p>
-          <button id="purchase">Purchase</button>
-          <br>
-          <br>
+
           <button class="cartRemove clicked" id="{{product.id}}">Remove from Cart</button>
-          <br>
-          <br>
+
           {{#if product.wishlist}}
           <button class="wishlistRemove clicked" id="{{product.id}}">Remove from Wishlist</button>
           {{else}} 
@@ -30,7 +27,9 @@
         </div>
       </div>
       {{/each}}
-      {{/if}}
+      {{/if}} 
+             <button id="purchase">Purchase</button>
+
 </div>
 <script src="/js/cart.js"></script>
 <script src="/js/home.js"></script>
