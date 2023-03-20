@@ -139,7 +139,12 @@ router.post('/cart', withAuth, async (req, res) => {
 
 router.get('/cart', withAuth, async (req, res) => {
   try {
-    if (req.session.cart) {
+    if (typeof req.session.cart !== 'undefined') {
+      // the variable is defined) {
+      if (req.session.cart.length == 0) {
+        res.render('cart', { empty: true })
+        return;
+      }
       const cartData = req.session.cart;
 
       const productData = await Product.findAll({
