@@ -1,6 +1,6 @@
 const { UserProduct } = require('../models');
 
-
+// This represents the user's Wishlist
 const userProductData = [
   {
     user_id: 1,
