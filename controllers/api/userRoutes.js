@@ -6,15 +6,18 @@ router.post('/', async (req, res) => {
   try {
     const userData = await User.create(req.body);
 
+    const redirect_url = req.session.redirect_url;
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
+      req.session.redirect_url = redirect_url;
 
-      res.status(200).json(userData);
+      res.status(200).json({ user: userData, redirect_url: redirect_url });
     });
   } catch (err) {
     console.log(err);
-    res.status(400).json(err);
+    res.status(400).json({message: 'Be sure to enter a valid email and a password of 8 or more characters'});
   }
 });
 
@@ -37,18 +40,14 @@ router.post('/login', async (req, res) => {
         .json({ message: 'Incorrect email or password, please try again' });
       return;
     }
-    console.log(req.session.redirect_url);
+
     const redirect_url = req.session.redirect_url;
-    console.log(42, redirect_url);
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-      console.log(46, redirect_url);
       req.session.redirect_url = redirect_url;
-      console.log(48, req.session.redirect_url);
-      // if (typeof req.session.redirect_url == undefined ) {
-      //   req.session.redirect_url
-      // }
+
       res.json({ user: userData, message: 'You are now logged in!', redirect_url: redirect_url });
     });
 
@@ -70,7 +69,6 @@ router.post('/logout', (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    // Find the logged in user based on the session ID
     const userData = await User.findAll({
       attributes: { exclude: ['password'] },
       include: { model: Product, through: UserProduct },

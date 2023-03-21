@@ -1,12 +1,10 @@
 const loginFormHandler = async (event) => {
     event.preventDefault();
   
-    // Collect values from the login form
     const email = document.querySelector('#email-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
   
     if (email && password) {
-      // Send a POST request to the API endpoint
       const response = await fetch('/api/users/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
@@ -15,15 +13,13 @@ const loginFormHandler = async (event) => {
       const responseJSON = await response.json();
       const data = await responseJSON;
       
-      console.log(data);
       if (data.redirect_url === '/cart') {
         data.redirect_url = '/api/users/cart'
       } else if (!data.redirect_url) {
         data.redirect_url ='/'
       }
       if (response.ok) {
-        // If successful, redirect the browser to the profile page
-        console.log(data.redirect_url);
+        // If successful, redirect the browser to the page the user was going to
         document.location.replace(data.redirect_url);
       } else {
         alert(response.statusText);
@@ -44,9 +40,16 @@ const loginFormHandler = async (event) => {
         body: JSON.stringify({ name, email, password }),
         headers: { 'Content-Type': 'application/json' },
       });
-  
+      const responseJSON = await response.json();
+      const data = await responseJSON;
+      
+      if (data.redirect_url === '/cart') {
+        data.redirect_url = '/api/users/cart'
+      } else if (!data.redirect_url) {
+        data.redirect_url ='/'
+      }  
       if (response.ok) {
-        document.location.replace('/profile');
+        document.location.replace(data.redirect_url);
       } else {
         alert(response.statusText);
       }
