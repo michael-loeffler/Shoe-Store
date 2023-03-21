@@ -7,8 +7,6 @@ const withAuth = require('../utils/auth');
 //import sequelize
 const sequelize = require('../config/connection');
 
-
-
 router.get('/', async (req, res) => { // main homepage get route
   try {
     const sort = req.query.sort ?? 'stock' // user's sort preferences
@@ -115,7 +113,6 @@ router.get('/profile', withAuth, async (req, res) => { // get route for Profile 
 
     const user = userData.get({ plain: true });
 
-
     if (!user.products.length) {
       res.render('profile', {
         user,
@@ -132,13 +129,14 @@ router.get('/profile', withAuth, async (req, res) => { // get route for Profile 
             }
           }
         })
-        res.render('profile', {
-          user,
-          logged_in: true
-        });
       }
+      res.render('profile', {
+        user,
+        logged_in: true
+      });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
