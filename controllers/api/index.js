@@ -1,5 +1,3 @@
-//for back-end purposes
-
 const router = require('express').Router();
 const categoryRoutes = require('./categoryRoutes');
 const productRoutes = require('./productRoutes');

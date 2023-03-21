@@ -49,6 +49,7 @@ const loginFormHandler = async (event) => {
         data.redirect_url ='/'
       }  
       if (response.ok) {
+        // If successful, redirect the browser to the page the user was going to
         document.location.replace(data.redirect_url);
       } else {
         alert(response.statusText);
