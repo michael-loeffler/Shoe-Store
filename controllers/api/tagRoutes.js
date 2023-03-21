@@ -2,10 +2,10 @@
 //for back-end purposes
 const router = require('express').Router();
 //const { UPSERT } = require('sequelize/types/lib/query-types');
-const { Tag, Product, ProductTag } = require('../../../models');
+const { Tag, Product, ProductTag } = require('../../models');
 
 //import sequelize
-const sequelize = require('../../../config/connection.js');
+const sequelize = require('../../config/connection.js');
 
 // The `/api/tags` endpoint
 
