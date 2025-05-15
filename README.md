@@ -3,6 +3,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
+
+**Important Update**: This app is no longer deployed on Heroku
+
 Our online Shoe Store is a full-stack e-commerce website that sells many different kinds of shoes. Users can browse our various offerings, sort them by price or stock, and view them in detail on separate pages. Once they create an account and log in, users will be able to take advantage of our Wishlist feature to save their favorite options for later while they decide what they want to ultimately purchase, or perhaps to share with friends or family who are looking for gift ideas. When a logged in user is ready to purchase a pair (or more) of shoes, they can utilize the Cart feature to gather all the items they would like to purchase in one place. Finally, at any time, a user can opt to remove an item for either list on any page of the site. The page will respond dynamically to reflect the change. 
 
 Our team wanted to create this webpage because it is a very practical endeavor to test our understanding and application of all we have learned thus far with respect to creating a full-stack web application. E-commerce has embedded itself in our daily lives and has become a very large part of basically every shopping experience. Having a smoothly operating and easy to navigate website is critical to maintaining customers, closing sales, and generating revenue. It is very likely that our first jobs after this program will have something to do with e-commerce, so this was a great way to put our skills to the test and add a highly relevant project to our portfolios. 
