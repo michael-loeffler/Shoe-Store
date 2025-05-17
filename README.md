@@ -4,7 +4,7 @@
 
 ## Description
 
-**Important Update**: This app is no longer deployed on Heroku
+**Important Update**: This app is no longer deployed on Heroku. Instead you can view the presentation with Demo included [here](https://youtu.be/ph_o2nvQNfA)
 
 Our online Shoe Store is a full-stack e-commerce website that sells many different kinds of shoes. Users can browse our various offerings, sort them by price or stock, and view them in detail on separate pages. Once they create an account and log in, users will be able to take advantage of our Wishlist feature to save their favorite options for later while they decide what they want to ultimately purchase, or perhaps to share with friends or family who are looking for gift ideas. When a logged in user is ready to purchase a pair (or more) of shoes, they can utilize the Cart feature to gather all the items they would like to purchase in one place. Finally, at any time, a user can opt to remove an item for either list on any page of the site. The page will respond dynamically to reflect the change. 
 
